@@ -70,7 +70,6 @@ void approxAndSave(char *filePrefix, double (*function)(double x, void *params))
             approx6FileName,
             approx10FileName
     );
-
     system(gnuplot_command);
 }
 

@@ -22,8 +22,8 @@ void approxSquares() {
         xs[i] = -1 + i * 2 / 100;
         ys[i] = originalFunc(xs[i], NULL);
     }
-    double c0, c1;
-    gsl_fit_linear(xs, 0, ys, 0, 100, &c0, &c1, null, null);
+    double c0, c1, cov00, cov01, cov11, sumsq;
+    gsl_fit_linear(xs, 1, ys, 1, 100, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
     FILE* approxFile = fopen("approx-squares.txt", "w");
     EVAL_TO_FILE(approxFile, c0 + c1 * x);
     fclose(approxFile);
@@ -31,7 +31,7 @@ void approxSquares() {
 
 void approximateChebyshev() {
     FILE *chebyshevFile = fopen("approx-chebyshev.txt", "w");
-    gsl_cheb_series *series = gsl_cheb_alloc(5);
+    gsl_cheb_series *series = gsl_cheb_alloc(1);
     gsl_function func;
     func.function = originalFunc;
     func.params = NULL;
